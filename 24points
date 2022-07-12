@@ -1,0 +1,44 @@
+def can_construct_24(nums):
+    # print("nums: ", nums)
+
+    res = False
+
+    def dfs(curr_nums, curr_val, text):
+        nonlocal res
+
+        if res:
+            return
+
+        if not curr_nums:
+            if abs(curr_val - 24) < 1e-5:
+                # print(text + str(curr_val))
+                res = True
+
+            return
+
+        for i in range(len(curr_nums)):
+
+            temp = curr_nums[:i] + curr_nums[i + 1:]
+
+            dfs(temp, curr_val + curr_nums[i], text + str(curr_val) + "+" + str(curr_nums[i]) + "=")
+            dfs(temp, curr_val - curr_nums[i], text + str(curr_val) + "-" + str(curr_nums[i]) + "=")
+            dfs(temp, curr_nums[i] - curr_val, text + str(curr_nums[i]) + "-" + str(curr_val) + "=")
+            dfs(temp, curr_val * curr_nums[i], text + str(curr_val) + "*" + str(curr_nums[i]) + "=")
+            if curr_nums[i] != 0:
+                dfs(temp, curr_val / curr_nums[i], text + str(curr_val) + "/" + str(curr_nums[i]) + "=")
+            if curr_val != 0:
+                dfs(temp, curr_nums[i] / curr_val, text + str(curr_nums[i]) + "/" + str(curr_val) + "=")
+
+    dfs(nums, 0, "")
+    print("yes" if res else "no")
+
+
+if __name__ == "__main__":
+    turns = int(input())
+
+    for i in range(turns):
+        nums = list(map(int, input().split()))
+        can_construct_24(nums)
+
+    # nums = [1, 1, 1, 1]
+    # can_construct_24(nums)
