@@ -24,7 +24,7 @@ dp = [0] * (max_cost + 1)
 
 
 for i in range(1, size + 1):
-    for j in range(max_cost , cost[i-1] - 1, -1):
+    for j in range(max_cost, cost[i-1] - 1, -1):
         dp[j] = max(dp[j-cost[i-1]] + value[i-1], dp[j])
     
 print(dp)
